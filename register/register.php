@@ -9,8 +9,15 @@
 </head>
 
 <body>
+    <div>
+    <h1 class="text-center my-5">registration</h1>
+    </div>
     <div class="d-flex align-items-center justify-content-center mt-5 ">
-    <form action="" method="POST" class="col-4 border-black">
+    <form action="../tkash/register/register_post.php" method="POST" class="col-4 border-black">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Name</label>
+            <input type="name" class="form-control" name="name" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Email address</label>
             <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -20,14 +27,12 @@
             <input type="text" class="form-control" name="number" id="exampleInputEmail1" aria-describedby="emailHelp">
         </div>
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" name="password" id="exampleInputPassword1">
-        </div>
-        <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Set Pin code</label>
-            <input type="text" class="form-control" name="pin" id="exampleInputPassword1">
+            <input type="password" class="form-control" name="pin" id="exampleInputPassword1">
         </div>
-        <button type="submit" class="btn btn-primary" name="register-btn">register</button>
+        <div class="text-center">
+        <button type="submit" class="btn btn-primary my-3" name="register-btn">register</button>
+        </div>
     </form>
     </div>
 
