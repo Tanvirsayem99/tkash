@@ -36,22 +36,21 @@ if (isset($_POST['send-btn'])) {
                     mysqli_query($db_connect, $exist_money_query);
                     mysqli_query($db_connect, $send_money_query);
                     $_SESSION['user_amount'] = $total_amount;
+                    header('location: send_money.php');
                 } else {
                     $_SESSION['pin-match-err'] = 'pin cannot match';
-                    echo 'pin cannot match' . '</br>';
-                    echo $pin . '</br>';
-                    echo $user['pin'];
+                    header('location: send_money.php');
                 }
             } else {
                 $_SESSION['amount-err'] = 'please add money first';
-                echo 'please add money first';
+                header('location: send_money.php');
             }
         } else {
             $_SESSION['exist_recipient_err'] = 'please enter a existing number';
-            echo 'please enter a existing number';
+            header('location: send_money.php');
         }
     } else {
         $_SESSION['send_money_exist_err'] = "please fill up all input";
-        echo "please fill up all input";
+        header('location: send_money.php');
     }
 }

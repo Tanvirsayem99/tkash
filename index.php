@@ -1,3 +1,3 @@
 <?php
-include('./register/register.php')
+include('./login/login.php');
 ?>

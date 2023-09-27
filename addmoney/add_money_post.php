@@ -20,20 +20,19 @@ if(isset($_POST['add-btn'])){
                     $add_money_query = "UPDATE users SET amount='$total_amount' WHERE id='$user_id'";
                     mysqli_query($db_connect,$add_money_query);
                     $_SESSION['user_amount'] = $total_amount;
+                    header("location: ../addmoney/add_money.php");
                 }else{
                     $_SESSION['pin-match-err'] = 'pin cannot match';
-                    echo 'pin cannot match' . '</br>';
-                    echo$pin . '</br>';
-                    echo$user['pin'];
+                    header("location: ../addmoney/add_money.php");
                 }
         }else{
             $_SESSION['exist_recipient_err'] = 'please enter a existing number';
-            echo 'please enter a existing number';
+            header("location: ../addmoney/add_money.php");
         }
     }
     else{
         $_SESSION['send_money_exist_err'] = "please fill up all input";
-        echo "please fill up all input";
+        header("location: ../addmoney/add_money.php");
     }
 }
 

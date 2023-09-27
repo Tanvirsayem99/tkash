@@ -1,14 +1,25 @@
 <?php
 session_start();
 include('../config/db.php');
-$current_amount = $_SESSION['user_number'];
-$select_user = "SELECT * FROM users WHERE number='$current_amount'";
-$receiver_connect = mysqli_query($db_connect, $select_user);
-$user = mysqli_fetch_assoc($receiver_connect);
-$_SESSION['user_amount'] = $user['amount'];
-// echo $_SESSION['user_id'];
-// echo $_SESSION['user_name'];
-// echo $_SESSION['user_number'];
+if(isset($_SESSION['user_number'])){
+    $current_amount = $_SESSION['user_number'];
+    $select_user = "SELECT * FROM users WHERE number='$current_amount'";
+    $receiver_connect = mysqli_query($db_connect, $select_user);
+    $user = mysqli_fetch_assoc($receiver_connect);
+    $_SESSION['user_amount'] = $user['amount'];
+}
+
+if(!isset($_SESSION['user_number'])){
+    header("location: ../login/login.php");
+}
+
+
+$server = $_SERVER['PHP_SELF'];
+$expolde = explode('/', $server);
+
+
+$link = end($expolde);
+
 ?>
 
 <!DOCTYPE html>
@@ -30,27 +41,37 @@ $_SESSION['user_amount'] = $user['amount'];
             </button>
             <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    <a class="nav-link" href="../send_money/send_money.php">send-money</a>
-                    <a class="nav-link" href="../addmoney/add_money.php">Add-money</a>
-                    <a class="nav-link" href="../transaction/transaction.php">history</a>
+                    <a class="nav-link active" aria-current="page" href="../home/home.php">Home</a>
+                    <a class="<?= ($link == 'send_money.php') ? 'text-primary' : '' ?> nav-link" href="../send_money/send_money.php">send-money</a>
+                    <a class="<?= ($link == 'add_money.php') ? 'text-primary' : '' ?> nav-link" href="../addmoney/add_money.php">Add-money</a>
+                    <a class="<?= ($link == 'transaction.php') ? 'text-primary' : '' ?> nav-link" href="../transaction/transaction.php">history</a>
+
+                    
+                    <a class="nav-link" href="../login/login.php">login</a>
+                    <?php if((isset($_SESSION['user_number']))) : ?>
+                        <a class="nav-link" href="../logout/logout.php">LogOut</a>
+                    <?php endif;?>
                 </div>
-                <div class="d-flex gap-3">
-                    <div class="">
-                        <? if ($_SESSION['user_amount']) : ?>
-                            <?= $_SESSION['user_amount'] ?>
+                <div class="bg-success-subtle rounded-5 p-2">
+                        Balance:
+                        <? if (isset($_SESSION['user_amount'])) : ?>
+                            <?= isset($_SESSION['user_amount']) ? $_SESSION['user_amount'] : '' ?>
                         <? endif;
                         unset($_SESSION['user_amount']) ?>
                     </div>
+                <div class="d-flex gap-3">
                     <div class="">
-                        <? if ($_SESSION['user_number']) : ?>
-                            <?= $_SESSION['user_number'] ?>
+                        number:
+                        <? if (isset($_SESSION['user_number'])) : ?>
+                            
+                            <?= isset($_SESSION['user_number']) ? $_SESSION['user_number'] : ''?>
                         <? endif;
                         unset($_SESSION['user_number']) ?>
                     </div>
                     <div class="">
-                        <? if ($_SESSION['user_name']) : ?>
-                            <?= $_SESSION['user_name'] ?>
+                        email:
+                        <? if (isset($_SESSION['user_name']))    : ?>
+                            <?= isset($_SESSION['user_name']) ? $_SESSION['user_name'] : '' ?>
                         <? endif;
                         unset($_SESSION['user_name']) ?>
                     </div>
@@ -58,7 +79,7 @@ $_SESSION['user_amount'] = $user['amount'];
             </div>
         </div>
     </nav>
-
+    <h1 class="text-center mt-5"><?= ($link == 'home.php') ? 'Hello welcome' : '' ?></h1>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

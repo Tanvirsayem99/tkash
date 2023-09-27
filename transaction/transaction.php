@@ -1,9 +1,15 @@
 <?php
 include("../home/home.php");
 include("../config/db.php");
-$user_number = $_SESSION['user_number'];
-$user_number_query = "SELECT * FROM transactions WHERE sender='$user_number' OR receiver='$user_number'";
-$transaction_history = mysqli_query($db_connect,$user_number_query);
+if(isset($_SESSION['user_number'])){
+  $user_number = $_SESSION['user_number'];
+  $user_number_query = "SELECT * FROM transactions WHERE sender='$user_number' OR receiver='$user_number'";
+  $transaction_history = mysqli_query($db_connect,$user_number_query);
+}
+if(!isset($_SESSION['user_number'])){
+  header("location: ../login/login.php");
+}
+
 $serial = 1;
 ?>
 
@@ -33,7 +39,8 @@ $serial = 1;
     </tr>
   </thead>
   <tbody>
-    <?php foreach($transaction_history as $item) :?>
+    <?php if(isset($transaction_history)) :?>
+      <?php foreach($transaction_history as $item) :?>
         <tr>
       <th scope="row"><?=$serial++?></th>
       <td><?php if($user_number == $item['sender']): ?><div>Send money</div><?php endif;?> <?php if($user_number == $item['receiver']): ?><div>received money</div><?php endif;?></td>
@@ -43,7 +50,8 @@ $serial = 1;
       <td><?=$item['time']?></td>
       <td><?=$item['details']?></td>
     </tr>
-        <?php endforeach;?>
+        <?php endforeach;?><?php endif;?>
+    
   </tbody>
 </table>    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
