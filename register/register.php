@@ -30,9 +30,13 @@
             <label for="exampleInputPassword1" class="form-label">Set Pin code</label>
             <input type="password" class="form-control" name="pin" id="exampleInputPassword1">
         </div>
+        <div>
+            <p>Already have a account? please <a href="../tkash/login/login.php">login</a></p>
+        </div>
         <div class="text-center">
         <button type="submit" class="btn btn-primary my-3" name="register-btn">register</button>
         </div>
+        
     </form>
     </div>
 

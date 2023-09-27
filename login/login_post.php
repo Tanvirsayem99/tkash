@@ -21,12 +21,12 @@ if(isset($_POST['login-btn'])){
            $_SESSION['user_id'] = $user['id'];
            $_SESSION['user_name'] = $user['name'];
            $_SESSION['user_number'] = $user['number'];
+           $_SESSION['user_amount'] = $user['amount'];
             
             header("location: ../home/home.php");
         }else{
             $_SESSION['login_error']="users information can't register";
             header("location: login.php");
-            echo "errror";
         }
     
     }
