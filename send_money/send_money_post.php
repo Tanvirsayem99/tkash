@@ -22,8 +22,9 @@ if (isset($_POST['send-btn'])) {
                 $user = mysqli_fetch_assoc($user_connect);
                 $user_pin = $user['pin'];
                 if ($pin === $user_pin) {
-                    $details = $user_number . "-" . $user_name . "-" . date("Y-m-d") . "." . $amount;
-                    $send_money_query = "INSERT INTO transactions (sender,receiver,amount,details) VALUES ('$user_number','$recipient_number','$amount','$details')";
+                    $date = date("Y-m-d H:i:s");
+                    $details = $user_number . "-" . $user_name;
+                    $send_money_query = "INSERT INTO transactions (sender,receiver,amount,time,details) VALUES ('$user_number','$recipient_number','$amount','$date','$details')";
                     $total_amount = $current_amount - $amount;
                     $exist_money_query = "UPDATE users SET amount='$total_amount' WHERE id='$user_id'";
                     $select_user = "SELECT * FROM users WHERE number='$recipient_number'";

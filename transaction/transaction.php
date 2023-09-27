@@ -1,7 +1,10 @@
 <?php
 include("../home/home.php");
 include("../config/db.php");
-
+$user_number = $_SESSION['user_number'];
+$user_number_query = "SELECT * FROM transactions WHERE sender='$user_number' OR receiver='$user_number'";
+$transaction_history = mysqli_query($db_connect,$user_number_query);
+$serial = 1;
 ?>
 
 <!DOCTYPE html>
@@ -25,28 +28,22 @@ include("../config/db.php");
       <th scope="col">status</th>
       <th scope="col">account</th>
       <th scope="col">amount</th>
-      <th scope="col">date</th>
+      <th scope="col">date/time</th>
+      <th scope="col">details</th>
     </tr>
   </thead>
   <tbody>
-
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+    <?php foreach($transaction_history as $item) :?>
+        <tr>
+      <th scope="row"><?=$serial++?></th>
+      <td><?php if($user_number == $item['sender']): ?><div>Send money</div><?php endif;?> <?php if($user_number == $item['receiver']): ?><div>received money</div><?php endif;?></td>
+      
+      <td><?php if($user_number == $item['sender']): ?><div><?=$item['receiver']?></div><?php endif;?> <?php if($user_number == $item['receiver']): ?><div><?=$item['sender']?></div><?php endif;?></td>
+      <td><?=$item['amount']?></td>
+      <td><?=$item['time']?></td>
+      <td><?=$item['details']?></td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
+        <?php endforeach;?>
   </tbody>
 </table>    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
